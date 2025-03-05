@@ -49,6 +49,14 @@ class Movie(db.Model):
     review: Mapped[str] = mapped_column(String(500), nullable=True)
     img_url: Mapped[str] = mapped_column(String(500), nullable=False)
 
+tmdb_url = "https://api.themoviedb.org/3/"
+image_url = "https://image.tmdb.org/t/p/w500"
+access_token = os.getenv('ACCESS_TOKEN')
+headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {access_token}"
+        }
+
 
 @app.route("/")
 def home():
@@ -84,13 +92,6 @@ def delete():
     db.session.commit()
     return redirect(url_for('home'))
 
-tmdb_url = "https://api.themoviedb.org/3/"
-image_url = "https://image.tmdb.org/t/p/w500"
-access_token = os.getenv('ACCESS_TOKEN')
-headers = {
-            "accept": "application/json",
-            "Authorization": f"Bearer {access_token}"
-        }
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
